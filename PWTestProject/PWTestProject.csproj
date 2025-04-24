@@ -21,4 +21,8 @@
         <Using Include="System.Threading.Tasks" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include=".github\workflows\playwright.yml" />
+    </ItemGroup>
+
 </Project>
