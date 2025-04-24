@@ -1,0 +1,19 @@
+# Build folders
+bin/
+obj/
+
+# Rider specific
+.idea/
+*.sln.iml
+
+# User-specific
+*.user
+*.suo
+*.userprefs
+
+# Playwright artifacts
+.playwright/
+
+# OS-specific
+.DS_Store
+Thumbs.db
