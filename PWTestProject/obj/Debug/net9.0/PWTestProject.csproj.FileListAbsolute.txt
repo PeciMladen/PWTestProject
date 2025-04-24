@@ -506,3 +506,4 @@
 /Users/mladenpecikoza/RiderProjects/PWTestProject/PWTestProject/bin/Debug/net9.0/.playwright/package/lib/vite/traceViewer/uiMode.BatfzHMG.css
 /Users/mladenpecikoza/RiderProjects/PWTestProject/PWTestProject/bin/Debug/net9.0/.playwright/package/lib/vite/traceViewer/uiMode.CHJSAD7F.js
 /Users/mladenpecikoza/RiderProjects/PWTestProject/PWTestProject/bin/Debug/net9.0/.playwright/package/lib/vite/traceViewer/xtermModule.Beg8tuEN.css
+/Users/mladenpecikoza/RiderProjects/PWTestProject/PWTestProject/obj/Debug/net9.0/PWTestProject.sourcelink.json
