@@ -30,4 +30,9 @@ jobs:
 
     - name: Run tests
       run: dotnet test
+    - name: Generate HTML Test Report
+      run: |
+       dotnet tool install --global dotnet-reportgenerator-globaltool
+       dotnet test --logger "trx;LogFileName=test_results.trx" --results-directory "TestResults"
+       reportgenerator -reports:TestResults/*.trx -targetdir:TestResults/html -reporttypes:Html
 
