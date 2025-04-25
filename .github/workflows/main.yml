@@ -35,7 +35,7 @@ jobs:
         reportgenerator -reports:TestResults/*.trx -targetdir:TestResults/html -reporttypes:Html
 
     - name: Upload HTML report as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: html-test-report
         path: TestResults/html
@@ -46,7 +46,7 @@ jobs:
 
     steps:
     - name: Download report artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: html-test-report
         path: report
