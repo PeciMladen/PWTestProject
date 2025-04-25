@@ -1,4 +1,4 @@
-name: Playwright .NET Tests
+name: Run Playwright Tests (.NET)
 
 on:
   push:
@@ -7,19 +7,19 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.0.x' # ili 7.0.x, u zavisnosti od tvoje verzije
+          dotnet-version: '8.0.x' # zameni ako koristiš 7.0 ili neku drugu
 
-      - name: Install dependencies
+      - name: Restore dependencies
         run: dotnet restore
 
       - name: Build project
@@ -28,5 +28,5 @@ jobs:
       - name: Install Playwright browsers
         run: pwsh ./bin/Debug/net8.0/playwright.ps1 install
 
-      - name: Run Playwright tests
-        run: dotnet test --filter TestCategory=Playwright
+      - name: Run tests
+        run: dotnet test
