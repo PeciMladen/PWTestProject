@@ -25,8 +25,8 @@ jobs:
     - name: Build project
       run: dotnet build --configuration Release
 
-    - name: Install Playwright browsers
-      run: pwsh ./bin/Debug/net8.0/playwright.ps1 install
+    - name: Install Playwright Browsers
+      run: dotnet tool restore && dotnet playwright install
 
     - name: Run tests
       run: dotnet test
