@@ -28,11 +28,34 @@ jobs:
     - name: Install Playwright Browsers
       run: dotnet tool restore && dotnet playwright install
 
-    - name: Run tests
-      run: dotnet test
-    - name: Generate HTML Test Report
+    - name: Run tests and generate HTML report
       run: |
-       dotnet tool install --global dotnet-reportgenerator-globaltool
-       dotnet test --logger "trx;LogFileName=test_results.trx" --results-directory "TestResults"
-       reportgenerator -reports:TestResults/*.trx -targetdir:TestResults/html -reporttypes:Html
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+        dotnet test --logger "trx;LogFileName=test_results.trx" --results-directory "TestResults"
+        reportgenerator -reports:TestResults/*.trx -targetdir:TestResults/html -reporttypes:Html
 
+    - name: Upload HTML report as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-test-report
+        path: TestResults/html
+
+  deploy-report:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download report artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: html-test-report
+        path: report
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: report
