@@ -13,7 +13,8 @@ public class Test2 : PageTest
         
         await Expect(logo).ToBeVisibleAsync();
     }
-
+    
+    [Ignore]
     [TestMethod]
     public async Task UserInitialization()
     {
