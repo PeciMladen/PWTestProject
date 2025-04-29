@@ -6,16 +6,21 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
@@ -28,6 +33,34 @@ jobs:
     - name: Install Playwright Browsers
       run: dotnet tool restore && dotnet playwright install
 
-    - name: Run tests
-      run: dotnet test
+    - name: Run tests and generate HTML report
+      run: |
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+        dotnet test --logger "trx;LogFileName=test_results.trx" --results-directory "TestResults"
+        reportgenerator -reports:TestResults/*.trx -targetdir:TestResults/html -reporttypes:Html
 
+    - name: Upload HTML report as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-test-report
+        path: TestResults/html
+
+  deploy-report:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download report artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: html-test-report
+        path: report
+
+    - name: Create .nojekyll to disable Jekyll
+      run: touch report/.nojekyll
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: report
